@@ -1,0 +1,5 @@
+export const BASE_URL = "https://thefreshcart.shop"
+export const ADMIN_BASE_URL = "https://thefreshcart.shop/api/admin"
+export const USER_BASE_URL = "https://thefreshcart.shop/api/user"
+export const TRAINER_BASE_URL = "https://thefreshcart.shop/api/trainer"
+export const CHAT_BASE_URL = "https://thefreshcart.shop/api/chats"
