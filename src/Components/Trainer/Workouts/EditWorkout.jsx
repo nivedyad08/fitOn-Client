@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "../../../config/axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { workoutDetails } from "../../redux-toolkit/slices/workoutSlice"
 
-const EditWorkout = () => {
+const EditWorkout = ({ setIsLoading }) => {
     const workout = useSelector((state) => state.workoutDetails.workoutInfo)
     const [categories, setCategories] = useState([])
     const [levels, setLevels] = useState([])
@@ -56,6 +57,7 @@ const EditWorkout = () => {
 
     const [imageSize, setImageSize] = useState(0)
     const [videoSize, setVideoSize] = useState("")
+    const dispatch = useDispatch()
 
     const handleThumbnailPicChange = (e) => {
         setThumbnailePic(e.target.files[0]);
@@ -66,29 +68,38 @@ const EditWorkout = () => {
     const onSubmit = async (data) => {
         try {
             if (data) {
+                console.log(data.category);
+                setIsLoading(true);
                 const formData = new FormData();
                 // Append form fields to formData
-                console.log(data);
                 formData.append("workoutTitle", data.workoutTitle);
                 formData.append("description", data.description);
                 formData.append("category", data.category);
                 formData.append("difficultyLevel", data.difficultyLevel);
-                formData.append("thumbnailImage", data.thumbnailImage[0]);
+                if (selectedThumbnailePic) {
+                    formData.append("thumbnailImage", data.thumbnailImage[0]);
+                }
+                let updatedWorkoutInfo;
 
                 const response = await axios.post(`api/trainer/edit-workout?workoutId=${ workout._id }`, formData)
-                console.log(response);
-                // if (response.status === 200) {
-                //     const formVideoData = new FormData();
-                //     const workoutId = response.data.workout._id
-                //     for (let key in videoFile) {
-                //         formVideoData.append("videos", videoFile[key]);
-                //     }
-                //     const upload = await axios.post(`api/trainer/upload-workout-video?workoutId=${ workoutId }`, formVideoData)
-                //     if (upload.status === 200) {
-                //         toast.success("Workout added successfully");
-                //         navigate("/trainer/workouts");
-                //     }
-                // }
+                if (response.status === 200) {
+                    updatedWorkoutInfo = response.data.workout
+                    console.log(updatedWorkoutInfo);
+                    console.log(videoFile);
+                    if (videoFile.length > 0) {
+                        console.log(2222);
+                        const formVideoData = new FormData();
+                        for (let key in videoFile) {
+                            formVideoData.append("videos", videoFile[key]);
+                        }
+                        const upload = await axios.post(`api/trainer/upload-workout-video?workoutId=${ workout._id }`, formVideoData)
+                        if (upload)
+                            updatedWorkoutInfo = response.data.workout
+                    }
+                    dispatch(workoutDetails(updatedWorkoutInfo))
+                    toast.success("Workout updated successfully");
+                    navigate("/trainer/workouts");
+                }
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -97,11 +108,14 @@ const EditWorkout = () => {
                 toast.error("An error occurred. Please try again later");
             }
         }
+        finally {
+            setIsLoading(false); // Reset the loading state from the TrainerRoute component
+        }
     };
 
     return (
         <div className='max-w-7xl w-5/6 mx-auto py-20'>
-            <form className='custom-blue p-20 rounded-md' onSubmit={ handleSubmit(onSubmit) }>
+            <form className='custom-blue p-20 rounded-md' onSubmit={ handleSubmit(onSubmit) } enctype="multipart/form-data">
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-2xl font-semibold leading-10 text-white">EDIT WORKOUT</h2>
@@ -131,7 +145,7 @@ const EditWorkout = () => {
                                         </small>
                                     ) }
                                 </div>
-                            </div>
+                            </div >
 
                             <div className="col-span-full mt-10">
                                 <label htmlFor="description" className="block text-sm font-lg leading-6 text-custom-whitish">
@@ -167,22 +181,22 @@ const EditWorkout = () => {
                                     <select
                                         id="category"
                                         name="category"
-                                        autoComplete="level-name"
+                                        autoComplete="category"
                                         { ...register("category", {
                                             required: "Category is required",
                                         }) }
                                         className={ `block w-full h-40 custom-blue-shade1 rounded-md border-0 py-3 text-gray-200 shadow-sm placeholder-gray-500 pl-4 placeholder-opacity-10 sm:text-sm sm:leading-6 ${ errors.category ? "border-red-500" : ""
                                             }` }
-                                        defaultValue={ workout?.category }
+                                        value={ workout.category } // Set the default value to category ID
                                     >
-                                        { categories?.map((category, i) => (
-                                            <option key={ i } value={ category._id }>{ category.name }</option>
+                                        { categories.map((category, i) => (
+                                            <option key={ i } value={ category._id }>
+                                                { category.name }
+                                            </option>
                                         )) }
                                     </select>
                                     { errors.category && (
-                                        <small className="mt-2 text-red-500 text-sm">
-                                            { errors.category.message }
-                                        </small>
+                                        <small className="mt-2 text-red-500 text-sm">{ errors.category.message }</small>
                                     ) }
                                 </div>
                             </div>
@@ -201,19 +215,20 @@ const EditWorkout = () => {
                                         }) }
                                         className={ `block w-full h-40 custom-blue-shade1 rounded-md border-0 py-3 text-gray-200 shadow-sm placeholder-gray-500 pl-4 placeholder-opacity-10 sm:text-sm sm:leading-6 ${ errors.difficultyLevel ? "border-red-500" : ""
                                             }` }
-                                        defaultValue={ workout.difficultyLevel }
+                                        value={ workout?.difficultyLevel } // Set the default value to difficulty level ID
                                     >
                                         { levels.map((level, i) => (
-                                            <option key={ i } value={ level._id }>{ level.name }</option>
+                                            <option key={ i } value={ level._id }>
+                                                { level.name }
+                                            </option>
                                         )) }
                                     </select>
                                     { errors.difficultyLevel && (
-                                        <small className="mt-2 text-red-500 text-sm">
-                                            { errors.difficultyLevel.message }
-                                        </small>
+                                        <small className="mt-2 text-red-500 text-sm">{ errors.difficultyLevel.message }</small>
                                     ) }
                                 </div>
                             </div>
+
 
                             <div className="col-span-full">
                                 <label htmlFor="cover-photo" className="block text-sm font-lg leading-6 text-custom-whitish">Thumbnail Image
@@ -239,23 +254,10 @@ const EditWorkout = () => {
                                         name="thumbnailImage"
                                         { ...register("thumbnailImage", {
                                             required: workout?.thumbnailImage ? false : "Image is required",
-                                            // validate: {
-                                            //     filesize: (file) => {
-                                            //         if (file && file[0]) {
-                                            //             const sizeInkB = file[0].size / 1024;
-                                            //             setImageSize(sizeInkB);
-                                            //             const maxImageSize = 800;
-                                            //             return (
-                                            //                 sizeInkB <= maxImageSize ||
-                                            //                 `Image should not exceed ${ maxImageSize }KB`
-                                            //             );
-                                            //         }
-                                            //         return true;
-                                            //     },
-                                            // },
                                         }) }
                                         onChange={ handleThumbnailPicChange }
                                     />
+
                                 </div>
                                 { errors.thumbnailImage && (
                                     <small className="mt-2 text-red-500 text-sm">
@@ -280,17 +282,17 @@ const EditWorkout = () => {
                                         accept="video/mp4,video/mpeg,video/quicktime"
                                         { ...register("videos", {
                                             required: workout?.video ? false : "Workout video is required",
-                                            // validate: {
-                                            //     filesize: (file) => {
-                                            //         if (file && file[0]) {
-                                            //             const sizeInkB = file[0].size / 1024;
-                                            //             setVideoSize(sizeInkB)
-                                            //             const maxVideoSize = 50000
-                                            //             return sizeInkB <= maxVideoSize || `video should not exceed ${ maxVideoSize }MB`
-                                            //         }
-                                            //         return true
-                                            //     }
-                                            // }
+                                            validate: {
+                                                filesize: (file) => {
+                                                    if (file && file[0]) {
+                                                        const sizeInkB = file[0].size / 1024;
+                                                        setVideoSize(sizeInkB)
+                                                        const maxVideoSize = 50000
+                                                        return sizeInkB <= maxVideoSize || `video should not exceed ${ maxVideoSize }MB`
+                                                    }
+                                                    return true
+                                                }
+                                            }
                                         }) }
                                         onChange={ (e) => {
                                             setVideos(e.target.files);
@@ -303,9 +305,9 @@ const EditWorkout = () => {
                                     </small>
                                 ) }
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div >
+                    </div >
+                </div >
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                     <button type="button" className="text-sm custom-light-blue focus-visible:outline-2 focus-visible:outline-offset-2 rounded-md px-20 py-8 text-white font-semibold leading-6">
@@ -318,8 +320,8 @@ const EditWorkout = () => {
                         Update
                     </button>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 

@@ -42,7 +42,7 @@ const TrainerRoute = () => {
 
                                     <Route path="workouts" element={ <WorkoutList /> } />
                                     <Route path="workout/:workoutId" element={ <ViewWorkout /> } />
-                                    <Route path="edit/:workoutId" element={ <EditWorkout /> } />
+                                    <Route path="edit/:workoutId" element={ <EditWorkout setIsLoading={ setIsLoading } /> } />
                                     <Route path="account" element={ <Account setIsLoading={ setIsLoading } /> } />
                                     <Route path="sessions" element={ <Sessions /> } />
                                     <Route path="chats" element={ <Messages setNotifications={ setNotifications } notifications={ notifications } selectedChat={ selectedChat } /> } />
