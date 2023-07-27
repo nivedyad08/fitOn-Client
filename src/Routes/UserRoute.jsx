@@ -40,7 +40,7 @@ const UserRoute = () => {
 
                             <Routes>
                                 <Route path="dashboard" element={ <Dashboard /> } />
-                                <Route path="account" element={ <Account /> } />
+                                <Route path="account" element={ <Account setIsLoading={ setIsLoading } /> } />
                                 <Route path="trainers" element={ <TrainersList /> } />
                                 <Route path="sessions" element={ <Sessions /> } />
                                 <Route path="trainer/details/:trainerId" element={ <TrainerDetails /> } />
