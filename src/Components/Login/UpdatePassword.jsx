@@ -18,7 +18,7 @@ const UpdatePassword = () => {
         defaultValues: {
             newPassword: "",
             confirmPassword: "",
-            email:email
+            email: email
         },
     });
 
@@ -75,7 +75,7 @@ const UpdatePassword = () => {
                                         message: "Password must be at least 6 characters long",
                                     },
                                 }) }
-                                className={ `block h-40 w-full py-2 px-4 rounded-md border-0 py-1.5 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.newPassword ? "border-red-500" : ""
+                                className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.newPassword ? "border-red-500" : ""
                                     }` }
                                 style={ { backgroundColor: "#414160" } }
                             />
@@ -89,7 +89,7 @@ const UpdatePassword = () => {
                     <div>
                         <label
                             htmlFor="confirmPassword"
-                            className="block text-sm font-medium leading-6 text-white font-normal"
+                            className="block text-sm font-medium leading-6 text-white"
                         >
                             Confirm Password
                         </label>
@@ -107,7 +107,7 @@ const UpdatePassword = () => {
                                     validate: (value) =>
                                         value === newPassword || "Passwords do not match",
                                 }) }
-                                className={ `block h-40 w-full py-2 px-4 rounded-md border-0 py-1.5 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.confirmPassword ? "border-red-500" : ""
+                                className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.confirmPassword ? "border-red-500" : ""
                                     }` }
                                 style={ { backgroundColor: "#414160" } }
                             />
@@ -121,7 +121,7 @@ const UpdatePassword = () => {
                     <input type="hidden" name="email" id="email" value={ email } />
                     <div>
                         <button
-                            className="rounded-lg h-40 w-full mt-10 bg-custom-yellow rounded-lg text-sm px-5 py-2.5 text-center font-medium focus:outline-none text-white"
+                            className="rounded-lg h-40 w-full mt-10 bg-custom-yellow  text-sm px-5 py-2.5 text-center font-medium focus:outline-none text-white"
                             type="submit"
                         >
                             SEND
@@ -133,7 +133,7 @@ const UpdatePassword = () => {
                     Back to{ " " }
                     <Link
                         to="/"
-                        className="font-medium leading-6 text-custom-yellow font-normal hover:text-indigo-500"
+                        className="font-medium leading-6 text-custom-yellow hover:text-indigo-500"
                     >
                         Login
                     </Link>
