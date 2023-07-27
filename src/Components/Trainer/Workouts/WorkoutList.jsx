@@ -81,7 +81,7 @@ const WorkoutList = () => {
                     },
                     {
                         Header: "Category",
-                        accessor: "category[0].name",
+                        accessor: "categoryInfo[0].name",
                     },
                     {
                         Header: "No. of viewers",
@@ -99,7 +99,7 @@ const WorkoutList = () => {
                                 <div className="space-x-10" style={ { display: "flex", flexDirection: "row" } } >
                                     <CreateIcon className="cursor-pointer" onClick={ () => editWorkout(row.original) } />
                                     <DeleteIcon onClick={ () => OpenDeleteModal(row.original) } className="cursor-pointer" />
-                                    {/* <VisibilityIcon className="cursor-pointer" onClick={ () => viewWorkout(row.original) } /> */ }
+                                    <VisibilityIcon className="cursor-pointer" onClick={ () => viewWorkout(row.original) } />
                                 </div>
                             );
                         },
