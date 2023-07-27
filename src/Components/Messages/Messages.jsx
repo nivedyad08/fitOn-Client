@@ -7,7 +7,7 @@ import {
     sendMessage
 } from "../../Services/UserApi"
 
-const EndPoint = "https://thefreshcart.shop";
+const EndPoint = "https://thefreshcart.shop/";
 var socket, selectedchatcompare;
 
 function Messages({ setNotifications, notifications, selectedChat }) {

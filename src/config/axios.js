@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 const api = axios.create({
   baseURL: "https://thefreshcart.shop/",
 });
+
 // Add a request interceptor
 api.interceptors.request.use(
   function (config) {
