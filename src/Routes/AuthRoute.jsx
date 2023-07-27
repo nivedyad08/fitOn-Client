@@ -18,7 +18,7 @@ const AdminRoute = () => {
                     <Route path="register" element={ <SignupPage /> } />
                     <Route path="forgot-password" element={ <ForgortPasswordPage /> } />
                     <Route path="forgot-password/email-verification" element={ <EmailVerification /> } />
-                    <Route path="user/forgotPassword" element={ <UpdatePasswordPage /> } />
+                    <Route path="updatePassword" element={ <UpdatePasswordPage /> } />
                     <Route path="profile-complete/:username/:userId" element={ <ProfileCompletePage /> } />
                     <Route path="payment/:userId" element={ <SignupPayment /> } />
                     <Route path="*" element={ <Error /> } />

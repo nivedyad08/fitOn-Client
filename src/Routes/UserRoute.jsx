@@ -12,7 +12,6 @@ import Watch from '../Components/User/Trainers/Watch';
 import Error from '../Components/Error';
 import Messages from '../Components/Messages/Messages';
 import Sessions from '../Components/User/Sessions';
-import UpdatePasswordPage from '../Pages/Login/UpdatePasswordPage';
 
 const UserRoute = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +48,6 @@ const UserRoute = () => {
                                 <Route path="checkout/:mode/:userId" element={ <Checkout /> } />
                                 <Route path="trainer/watch/:workoutVideo/:workoutId" element={ <Watch /> } />
                                 <Route path="chats" element={ <Messages setNotifications={ setNotifications } notifications={ notifications } selectedChat={ selectedChat } /> } />
-                                <Route path="forgotPassword" element={ <UpdatePasswordPage /> } />
                                 <Route path="*" element={ <Error /> } />
                             </Routes>
 
