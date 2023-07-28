@@ -193,7 +193,7 @@ export default function SignupForm() {
                         required: "Email is required",
                         pattern: {
                           value: /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
-                          message: "Email does'nt match",
+                          message: "Enter valid email",
                         },
                       }) }
                       className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.email ? "border-red-500" : ""
@@ -224,10 +224,10 @@ export default function SignupForm() {
                       type="password"
                       autoComplete="current-password"
                       { ...register("password", {
-                        required: "Password must be strong",
+                        required: "Password is required",
                         pattern: {
                           value: /((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/i,
-                          message: "Password must be strong",
+                          message: "Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, and one special character ",
                         },
                       }) }
                       className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.password ? "border-red-500" : ""
