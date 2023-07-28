@@ -13,38 +13,17 @@ const UploadBasicVideo = ({ handleBasicVideoUpload }) => {
     watch,
   } = useForm({
     defaultValues: {
-      basicVideo: "",
+      videos: "",
     },
   });
   const navigate = useNavigate()
-  const { basicVideo } = watch(["basicVideo"])
+  const { videos } = watch(["videos"])
   const [videoSize, setVideoSize] = useState("")
   const [videoFile, setVideos] = useState([]);
 
   const user = useSelector((state) => state.loggedUser.userInfo)
-  // const onSubmit = async (data) => {
-  //   try {
-  //     if (data) {
-  //       const formVideoData = new FormData();
-  //       for (let key in videoFile) {
-  //         formVideoData.append("basicVideo", videoFile[key]);
-  //       }
-  //       const upload = await axios.post(`api/trainer/upload-basic-workout-video?userId=${ user._id }`, formVideoData)
-  //       if (upload.status === 200) {
-  //         setAddWorkoutForm(false)
-  //         toast.success("Basic workout video added successfully");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     if (error.response && error.response.status === 400) {
-  //       toast.error(error.response.data.message);
-  //     } else {
-  //       toast.error("An error occurred. Please try again later");
-  //     }
-  //   }
-  // };
   const onSubmit = async (data) => {
-    await handleBasicVideoUpload(data,videoFile);
+    await handleBasicVideoUpload(data, videoFile);
   };
   return (
     <>
@@ -80,12 +59,12 @@ const UploadBasicVideo = ({ handleBasicVideoUpload }) => {
           <div className="mt-2 py-20">
             <input
               type="file"
-              name="basicVideo"
-              id="basicVideo"
+              name="videos"
+              id="videos"
               multiple
               className="block w-2/3 text-sm h-40 text-gray-900 rounded-lg cursor-pointer custom-blue-shade1 dark:text-gray-400 focus:outline-none dark:bg-gray-700 placeholder-gray-500 placeholder-opacity-10"
               accept="video/mp4,video/mpeg,video/quicktime"
-              { ...register("basicVideo", {
+              { ...register("videos", {
                 required: "Workout video is required",
                 validate: {
                   filesize: (file) => {
@@ -104,9 +83,9 @@ const UploadBasicVideo = ({ handleBasicVideoUpload }) => {
               } }
             />
           </div>
-          { errors.basicVideo && (
+          { errors.videos && (
             <small className="mt-2 text-red-500 text-sm">
-              { errors.basicVideo.message }
+              { errors.videos.message }
             </small>
           ) }
           <div className="mt-6 flex items-center justify-start gap-x-6">
