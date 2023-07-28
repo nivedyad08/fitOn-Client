@@ -19,8 +19,10 @@ const TrainerDetails = () => {
             )
             if (!subscriber.length > 0)
                 navigate("/user/subscribe/membership")
-            else
-                navigate(`/user/trainer/watch/${ workoutVideo }/${ workoutId }`)
+            else {
+                const generatedURL = `/user/trainer/watch/${ encodeURIComponent(workoutVideo) }/${ encodeURIComponent(workoutId) }`;
+                navigate(generatedURL)
+            }
 
         } else {
             navigate("/user/subscribe/membership")
