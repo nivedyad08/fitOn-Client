@@ -227,7 +227,30 @@ export default function SignupForm() {
                         required: "Password is required",
                         pattern: {
                           value: /((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/i,
-                          message: "Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, and one special character ",
+                          message: "Password must be at least 8 characters and include one special character",
+                        },
+                      }) }
+                      className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.password ? "border-red-500" : ""
+                        }` }
+                      style={ { backgroundColor: "#414160" } }
+                    />
+                    { errors.password && (
+                      <small className="mt-2 text-red-500 text-sm">
+                        { errors.password.message }
+                      </small>
+                    ) }
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      id="Confirm Password"
+                      name="Confirm Password"
+                      type="Confirm Password"
+                      autoComplete="current-Confirm Password"
+                      { ...register("Confirm Password", {
+                        required: "Confirm Password is required",
+                        pattern: {
+                          value: /((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/i,
+                          message: "Confirm Password must be at least 8 characters and include one special character",
                         },
                       }) }
                       className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.password ? "border-red-500" : ""

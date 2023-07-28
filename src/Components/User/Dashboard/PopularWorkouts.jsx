@@ -24,7 +24,7 @@ const PopularWorkouts = () => {
                 <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-24 sm:grid-cols-1">
                     {
                         workouts.map((workout, index) => (
-                            <div className='w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2' key={ index }>
+                            <div className='w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block relative p-2' key={ index }>
                                 <img
                                     className='w-[252px] h-[220px] block'
                                     src={ workout.thumbnailImage ? workout.thumbnailImage : workout.user.thumbnailImage }

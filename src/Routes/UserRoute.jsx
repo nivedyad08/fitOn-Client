@@ -12,6 +12,7 @@ import Watch from '../Components/User/Trainers/Watch';
 import Error from '../Components/Error';
 import Messages from '../Components/Messages/Messages';
 import Sessions from '../Components/User/Sessions';
+import FloatingButton from "../Components/FloatingButton";
 
 const UserRoute = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +51,7 @@ const UserRoute = () => {
                                 <Route path="chats" element={ <Messages setNotifications={ setNotifications } notifications={ notifications } selectedChat={ selectedChat } /> } />
                                 <Route path="*" element={ <Error /> } />
                             </Routes>
-
+                            <FloatingButton />
                         </div>
                     </main>
                 </Suspense>

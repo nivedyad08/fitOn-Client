@@ -11,6 +11,7 @@ import Messages from '../Components/Messages/Messages';
 import Loader from '../Components/Loader';
 import Error from '../Components/Error';
 import Sessions from '../Components/Trainer/Sessions/Sessions';
+import FloatingButton from "../Components/FloatingButton";
 
 const TrainerRoute = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +49,7 @@ const TrainerRoute = () => {
                                     <Route path="chats" element={ <Messages setNotifications={ setNotifications } notifications={ notifications } selectedChat={ selectedChat } /> } />
                                     <Route path="*" element={ <Error /> } />
                                 </Routes>
+                                <FloatingButton />
                             </div>
                         </main>
                     </Suspense>

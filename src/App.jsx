@@ -10,7 +10,6 @@ import UserRoute from "./Routes/UserRoute";
 import LandingPage from "./Pages/Landing/LandingPage";
 import ProtectedAuth from "./Auth/ProtectedAuth";
 import AuthRoute from "./Routes/AuthRoute";
-import FloatingButton from "./Components/FloatingButton";
 
 function App() {
   return (
@@ -36,7 +35,6 @@ function App() {
         <Route path="/*" element={ <errorPage /> } />
       </Routes>
       <ToastContainerBox />
-      <FloatingButton />
 
     </div>
   );
