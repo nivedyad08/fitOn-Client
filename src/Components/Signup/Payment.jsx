@@ -1,11 +1,12 @@
 import React, { useState, forwardRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Payment = forwardRef(function ({ checkout, setCheckOut }, ref) {
+  const navigate = useNavigate()
   return (
     <>
       <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
-        <div className="text-center">
+        <div className="text-center cursor-pointer" onClick={ () => navigate("/") }>
           <img className="mx-auto w-48" src="/logo.png" alt="logo" />
           <h4 className="mb-12 mt-1 pb-1 text-xl text-white font-semibold">
             FitOn
@@ -71,15 +72,6 @@ const Payment = forwardRef(function ({ checkout, setCheckOut }, ref) {
                   </div>
                 </div>
               </div>
-              <p className="mt-10 text-center text-sm text-custom-slate">
-                Already registered ?{ " " }
-                <Link
-                  to="/login"
-                  className="font-medium leading-6 text-custom-yellow hover:text-indigo-500"
-                >
-                  Login
-                </Link>
-              </p>
             </div>
           </div>
         </div>

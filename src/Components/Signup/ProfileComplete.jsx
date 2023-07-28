@@ -43,7 +43,7 @@ function ProfileComplete() {
       formData.append("userBio", userInput.userBio);
       formData.append("userLocation", userInput.userLocation);
       formData.append("userId", userId);
-      
+
       const response = await axios.post(
         "/api/auth/user/profile-complete",
         formData
@@ -52,7 +52,7 @@ function ProfileComplete() {
         const { accessToken, user } = response.data;
         dispatch(signupUserDetails(user));
         toast.success("User Profile updated Successfully");
-        navigate(`/payment/${user._id}`);
+        navigate(`/payment/${ user._id }`);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -64,7 +64,7 @@ function ProfileComplete() {
   };
   return (
     <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
-      <div className="text-center">
+      <div className="text-center cursor-pointer" onClick={ () => navigate("/") }>
         <img className="mx-auto w-48" src="/logo.png" alt="logo" />
         <h4 className="mb-12 mt-1 pb-1 text-xl text-white font-semibold">
           FitOn
@@ -192,16 +192,6 @@ function ProfileComplete() {
             </button>
           </div>
         </form>
-
-        <p className="mt-10 text-center text-sm text-custom-slate">
-          Already registered ?{ " " }
-          <Link
-            to="/login"
-            className="font-medium leading-6 text-custom-yellow hover:text-indigo-500"
-          >
-            Login
-          </Link>
-        </p>
       </div>
     </div>
   );

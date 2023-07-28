@@ -20,9 +20,12 @@ export default function SignupForm() {
       email: "",
       password: "",
       userLocation: "",
+      confirmPassword: "",
     },
   });
-  const { firstName, lastName, email, password, userLocation } = watch(["firstName", "lastName", "email", "password", "userLocation"])
+  const navigate = useNavigate()
+
+  const { firstName, lastName, email, password, userLocation, confirmPassword } = watch(["firstName", "lastName", "email", "password", "userLocation", "confirmPassword"])
 
   const [showSignupForm, setSignupForm] = useState(true)
   const [showVerificationModal, setVerificationModal] = useState(false)
@@ -49,10 +52,16 @@ export default function SignupForm() {
       }
     }
   };
+
+  const passwordMatchValidator = (value) => {
+    const passwordValue = watch("password");
+    return value === passwordValue || "Passwords do not match";
+  };
+
   return (
     <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
 
-      <div className="text-center">
+      <div className="text-center cursor-pointer" onClick={ () => navigate("/") }>
         <img className="mx-auto w-48" src="/logo.png" alt="logo" />
         <h4 className="mb-12 mt-1 pb-1 text-xl text-white font-semibold">
           FitOn
@@ -240,26 +249,31 @@ export default function SignupForm() {
                       </small>
                     ) }
                   </div>
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium leading-6 text-custom-whitish"
+                    >
+                      Confirm Password
+                    </label>
+                  </div>
                   <div className="mt-2">
                     <input
-                      id="Confirm Password"
-                      name="Confirm Password"
-                      type="Confirm Password"
+                      id="confirmPassword"
+                      type="password"
+                      name="confirmPassword"
                       autoComplete="current-Confirm Password"
-                      { ...register("Confirm Password", {
+                      { ...register("confirmPassword", {
                         required: "Confirm Password is required",
-                        pattern: {
-                          value: /((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/i,
-                          message: "Confirm Password must be at least 8 characters and include one special character",
-                        },
+                        validate: passwordMatchValidator, // Add the custom validation function
                       }) }
-                      className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.password ? "border-red-500" : ""
+                      className={ `block h-40 w-full py-2 px-4 rounded-md border-0 text-white shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 ${ errors.confirmPassword ? "border-red-500" : ""
                         }` }
                       style={ { backgroundColor: "#414160" } }
                     />
-                    { errors.password && (
+                    { errors.confirmPassword && (
                       <small className="mt-2 text-red-500 text-sm">
-                        { errors.password.message }
+                        { errors.confirmPassword.message }
                       </small>
                     ) }
                   </div>
