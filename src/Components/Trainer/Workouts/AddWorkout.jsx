@@ -131,6 +131,8 @@ export default function AddWorkout({ setIsLoading }) {
             } else {
                 toast.error("An error occurred. Please try again later");
             }
+        } finally {
+            setIsLoading(false); // Reset the loading state from the TrainerRoute component
         }
     };
 

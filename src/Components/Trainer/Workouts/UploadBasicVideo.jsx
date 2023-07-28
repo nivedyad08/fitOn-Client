@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const UploadBasicVideo = ({ handleBasicVideoUpload }) => {
+const UploadBasicVideo = ({ handleBasicVideoUpload, setIsLoading }) => {
   const {
     register,
     handleSubmit,
@@ -23,6 +23,7 @@ const UploadBasicVideo = ({ handleBasicVideoUpload }) => {
 
   const user = useSelector((state) => state.loggedUser.userInfo)
   const onSubmit = async (data) => {
+    setIsLoading(true);
     await handleBasicVideoUpload(data, videoFile);
   };
   return (

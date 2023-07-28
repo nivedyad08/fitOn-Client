@@ -7,7 +7,7 @@ import {
     sendMessage
 } from "../../Services/UserApi"
 
-const EndPoint = "https://thefreshcart.shop/";
+const EndPoint = "http://localhost:8080";
 var socket, selectedchatcompare;
 
 function Messages({ setNotifications, notifications, selectedChat }) {
@@ -22,6 +22,8 @@ function Messages({ setNotifications, notifications, selectedChat }) {
     const [updated, setUpdated] = useState(false);
 
     const chatContainerRef = useRef(null);
+
+    const [showInput, setInput] = useState(false)
 
     const user = useSelector((state) => state.loggedUser.userInfo);
 
@@ -101,6 +103,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
     })
 
     const handleUserSelection = (users) => {
+        setInput(true)
         setSelectedUser(users.firstName);
 
         createNewChat(users._id).then((res) => {
@@ -206,22 +209,24 @@ function Messages({ setNotifications, notifications, selectedChat }) {
                         }
 
                     </div>
-                    <div className="message-input flex items-center">
-                        { istyping ? <div className="text-blue-900">Typing...</div> : <></> }
-                        <input
-                            type="text"
-                            value={ message }
-                            onChange={ typingHandler }
-                            className="p-10 flex-grow max-w-full rounded-l-md border border-gray-300 focus:outline-none"
-                            placeholder="Type your message..."
-                        />
-                        <button
-                            onClick={ handleSendMessage }
-                            className="px-6 py-12 bg-blue-500 text-white rounded-r-md cursor-pointer transition-colors duration-300 hover:bg-blue-600"
-                        >
-                            <SendIcon />
-                        </button>
-                    </div>
+                    { showInput && (
+                        <div className="message-input flex items-center">
+                            { istyping ? <div className="text-blue-900">Typing...</div> : <></> }
+                            <input
+                                type="text"
+                                value={ message }
+                                onChange={ typingHandler }
+                                className="p-10 flex-grow max-w-full rounded-l-md border border-gray-300 focus:outline-none"
+                                placeholder="Type your message..."
+                            />
+                            <button
+                                onClick={ handleSendMessage }
+                                className="px-6 py-12 bg-blue-500 text-white rounded-r-md cursor-pointer transition-colors duration-300 hover:bg-blue-600"
+                            >
+                                <SendIcon />
+                            </button>
+                        </div>
+                    ) }
                 </div>
             </div>
         </>
