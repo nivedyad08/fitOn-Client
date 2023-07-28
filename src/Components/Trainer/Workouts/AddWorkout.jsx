@@ -361,6 +361,6 @@ export default function AddWorkout({ setIsLoading }) {
                 </form>
             </div>
             :
-            <Alert handleBasicVideoUpload={ handleBasicVideoUpload } />
+            <Alert handleBasicVideoUpload={ handleBasicVideoUpload } setIsLoading={ setIsLoading } />
     )
 }
