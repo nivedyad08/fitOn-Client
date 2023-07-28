@@ -115,7 +115,7 @@ export default function AddWorkout({ setIsLoading }) {
                 const formVideoData = new FormData();
 
                 for (let key in videoFile) {
-                    formVideoData.append("basicVideo", videoFile[key]);
+                    formVideoData.append("videos", videoFile[key]);
                 }
 
                 const response = await axios.post(`api/trainer/upload-basic-workout-video?userId=${ user._id }`, formVideoData);
