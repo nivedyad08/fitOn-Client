@@ -7,7 +7,7 @@ import {
     sendMessage
 } from "../../Services/UserApi"
 
-const EndPoint = "http://localhost:8080";
+const EndPoint = "https://thefreshcart.shop/";
 var socket, selectedchatcompare;
 
 function Messages({ setNotifications, notifications, selectedChat }) {
@@ -44,7 +44,6 @@ function Messages({ setNotifications, notifications, selectedChat }) {
     }, [user._id]);
 
     useEffect(() => {
-        console.log("selectedChat====", selectedChat);
         if (selectedChat) {
             createNewChat(selectedChat).then((res) => {
                 if (res._id) {
@@ -59,7 +58,6 @@ function Messages({ setNotifications, notifications, selectedChat }) {
 
                     socket.emit("join chat", (chatid));
                     getChats().then((res) => {
-                        console.log("res", res);
                         const chatUsers = res.map((item) => {
                             return (item.chats[0].users.filter((chatuser) => chatuser._id != user._id))
                         })
@@ -74,7 +72,6 @@ function Messages({ setNotifications, notifications, selectedChat }) {
             })
         } else {
             getChats().then((res) => {
-                console.log(res);
                 setUsers(res)
             })
         }
